@@ -1,6 +1,6 @@
 # Conception multi-langue
 
-Le dépôt s'appelle `deepseek-harness-fr` parce que le français est le pack livré. **Le moteur,
+Le dépôt s'appelle `DSH-DeepSeek-Harness-Fr` parce que le français est le pack livré. **Le moteur,
 lui, ignore le français** : il ne connaît que des codes de langue et des dictionnaires.
 
 ## Le contrat d'un pack

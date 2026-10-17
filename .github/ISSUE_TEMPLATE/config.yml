@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://github.com/xtrem21-source/deepseek-harness-fr/tree/main/docs
+    url: https://github.com/xtrem21-source/DSH-DeepSeek-Harness-Fr/tree/main/docs
     about: Mécanisme, multi-langue, ajout d'une langue, dépannage.
   - name: Signaler une vulnérabilité
-    url: https://github.com/xtrem21-source/deepseek-harness-fr/security/advisories/new
+    url: https://github.com/xtrem21-source/DSH-DeepSeek-Harness-Fr/security/advisories/new
     about: En privé, jamais en issue publique.

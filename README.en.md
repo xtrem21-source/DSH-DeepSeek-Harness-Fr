@@ -36,8 +36,8 @@ effort labels.
 ## Install
 
 ```powershell
-git clone https://github.com/xtrem21-source/deepseek-harness-fr.git
-cd deepseek-harness-fr
+git clone https://github.com/xtrem21-source/DSH-DeepSeek-Harness-Fr.git
+cd DSH-DeepSeek-Harness-Fr
 npm ci
 npm test
 ```
