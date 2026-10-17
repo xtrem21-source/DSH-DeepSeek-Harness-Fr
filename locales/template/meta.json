@@ -1,0 +1,7 @@
+{
+  "code": "xx",
+  "label": "Your language",
+  "fallback": "en",
+  "direction": "ltr",
+  "effort": {}
+}

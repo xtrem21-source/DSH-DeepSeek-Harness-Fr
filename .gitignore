@@ -1,0 +1,14 @@
+# Dépendances et sorties de build
+node_modules/
+out/
+tmp/
+
+# Archives de l'application : jamais dans le dépôt
+*.asar
+*.asar.payload
+sauvegarde/
+
+# Divers
+*.log
+.DS_Store
+Thumbs.db

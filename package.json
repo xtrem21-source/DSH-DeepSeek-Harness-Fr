@@ -1,0 +1,36 @@
+{
+  "name": "deepseek-harness-fr",
+  "version": "1.0.0",
+  "description": "Patch delta multi-langue pour l'interface de DeepSeek Harness — pack français fourni, autres langues possibles.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "bin": {
+    "dsh-locale-delta": "src/patch.mjs"
+  },
+  "files": [
+    "src",
+    "locales",
+    "scripts",
+    "docs",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "NOTICE.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "list": "node src/patch.mjs --list",
+    "verify:packs": "node tests/validate-packs.mjs",
+    "exporter-cles": "node scripts/exporter-les-cles.mjs",
+    "test": "node tests/run.mjs",
+    "patch": "node src/patch.mjs",
+    "status": "node src/patch.mjs --status",
+    "verify": "node src/patch.mjs --verify"
+  },
+  "dependencies": {
+    "@electron/asar": "3.4.1"
+  }
+}

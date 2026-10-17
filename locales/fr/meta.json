@@ -1,0 +1,13 @@
+{
+  "code": "fr",
+  "label": "Français",
+  "fallback": "en",
+  "direction": "ltr",
+  "effort": {
+    "High": "Élevé",
+    "Medium": "Moyen",
+    "Low": "Faible",
+    "Max": "Max",
+    "Minimal": "Minimal"
+  }
+}

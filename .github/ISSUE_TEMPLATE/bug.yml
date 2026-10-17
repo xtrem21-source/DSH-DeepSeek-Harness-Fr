@@ -1,0 +1,70 @@
+name: Signaler un bug
+description: Le patch échoue, l'interface reste en anglais, l'application ne démarre plus…
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de décrire précisément ce qui s'est passé. **Ne joignez pas `app.asar`** :
+        il est volumineux et n'est pas nécessaire pour diagnostiquer.
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Version de DeepSeek Harness
+      description: Visible dans À propos, ou dans le nom du programme d'installation.
+    validations:
+      required: true
+
+  - type: input
+    id: patch-version
+    attributes:
+      label: Version du patch
+      description: Sortie de `node src/patch.mjs --status <archive>` ou le contenu de `package.json`.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: locale
+    attributes:
+      label: Locale concernée
+      options:
+        - fr
+        - autre (préciser)
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: Commande exécutée
+      render: powershell
+      placeholder: scripts\Appliquer-le-patch.cmd
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Sortie complète
+      description: Copiez le message d'erreur ou la sortie JSON.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Vérifications
+      options:
+        - label: L'application était complètement fermée (icône de notification incluse)
+        - label: J'ai restauré `sauvegarde\app.asar.original` et l'application redémarre
+        - label: J'ai relu `docs/depannage.md`
