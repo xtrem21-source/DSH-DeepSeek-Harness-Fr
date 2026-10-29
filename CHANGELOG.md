@@ -1,5 +1,15 @@
 # Journal des versions
 
+## 1.1.2 — 2026-10-29
+
+**Documentation : les trois fournisseurs sont confirmés.**
+
+- `LISEZ-MOI.txt` : la section « vérifié » liste **Gemini, Groq et ElevenLabs** comme
+  proposés et opérationnels, chacun exécuté avec une clé réelle ; la mention « le poste
+  utilise ElevenLabs » a disparu.
+- `TABLE-EXIGENCES.md` : lignes 1.5 et 1.6 passées à « — » côté « non fait ».
+- Archive renommée `DSH-Desktop-Patch-FR-windows-x64-1.1.2.zip` (aucun changement de code).
+
 ## 1.1.1 — 2026-10-29
 
 **Micro : troisième fournisseur, Groq (Whisper).**

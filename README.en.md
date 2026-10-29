@@ -31,7 +31,7 @@ Both methods can coexist: they do not touch the same files. The profile pack doe
 
 Full French interface, microphone button and Clear Blue theme, without repacking the archive.
 
-1. Download **`DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip`** (repository root) and extract it,
+1. Download **`DSH-Desktop-Patch-FR-windows-x64-1.1.2.zip`** (repository root) and extract it,
    or clone the repository and open `pack-desktop/`.
 2. Close DeepSeek Harness, then double-click **`patcher.bat`**.
 3. Reopen the app: the interface is in French, the microphone sits right of the send arrow

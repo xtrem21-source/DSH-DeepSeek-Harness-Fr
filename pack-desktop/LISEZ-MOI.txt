@@ -197,9 +197,12 @@ Verifie sur ce poste, avec sortie lue :
   - pachage et restauration du profil ont ete rejoues.
 
 Verifie depuis, dans l'application elle-meme (2026-10-29) :
-  - dictee de bout en bout avec la cle ElevenLabs du poste : enregistrement
-    (MediaRecorder), envoi a POST /v1/speech-to-text (scribe_v2), transcription
-    recue en moins de 2 s, texte insere dans le champ de saisie ;
+  - les trois fournisseurs de transcription sont proposes et operationnels :
+    Gemini (Google), Groq (whisper-large-v3-turbo) et ElevenLabs (scribe_v2).
+    Chacun a ete execute avec une cle reelle et confirme a l'usage ;
+  - dictee de bout en bout : enregistrement (MediaRecorder), envoi a l'API du
+    fournisseur choisi, transcription recue en moins de 2 s, texte insere dans
+    le champ de saisie ;
   - le bouton micro est monte par React dans l'emplacement
     conversation.input.activity : il survit aux envois de message. C'etait le
     defaut corrige : l'ancienne version l'inserait dans le DOM du composeur,
@@ -207,8 +210,6 @@ Verifie depuis, dans l'application elle-meme (2026-10-29) :
   - taille du bouton alignee sur la fleche d'envoi (34 x 34 px).
 
 Non verifie, et signale comme tel :
-  - le fournisseur Gemini avec une cle personnelle : le poste utilise
-    ElevenLabs ; le chemin Gemini n'a pas ete rejoue depuis la correction ;
   - une dictee pendant que l'agent travaille (file d'attente), non rejouee.
 
 
@@ -216,7 +217,8 @@ EN CAS DE PROBLEME
 ------------------
 1. Lisez  logs\dernier.log : chaque action y figure avec son resultat.
 2. Pour revenir a l'etat initial :  restaurer.bat
-3. Si le micro ne reagit pas : clic droit dessus et collez votre cle Gemini.
+3. Si le micro ne reagit pas : clic droit dessus, choisissez Gemini, Groq ou
+   ElevenLabs, puis collez la cle correspondante.
 4. Si l'application refuse de demarrer :  restaurer.bat  (elle remet app.asar).
 
 Ce patch ne supprime jamais definitivement : tout ce qu'il remplace est copie

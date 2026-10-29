@@ -15,7 +15,7 @@ et ne modifie **pas** `app.asar` : elle ajoute des paquets au profil de l'applic
 ## Installation
 
 ```text
-1. Extraire l'archive DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip
+1. Extraire l'archive DSH-Desktop-Patch-FR-windows-x64-1.1.2.zip
    (ou copier pack-desktop/).
 2. Fermer DeepSeek Harness.
 3. Double-cliquer patcher.bat.

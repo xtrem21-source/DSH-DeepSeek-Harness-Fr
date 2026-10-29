@@ -29,7 +29,7 @@ ne modifie pas `app.asar` (la permission micro y est déjà native dans la versi
 
 Interface française complète, bouton micro et thème Clear Blue, sans réemballer l'archive.
 
-1. Télécharger **`DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip`** (racine du dépôt) et l'extraire,
+1. Télécharger **`DSH-Desktop-Patch-FR-windows-x64-1.1.2.zip`** (racine du dépôt) et l'extraire,
    ou cloner le dépôt et aller dans `pack-desktop/`.
 2. Fermer DeepSeek Harness, puis double-cliquer **`patcher.bat`**.
 3. Rouvrir l'application : l'interface est en français, le micro est à droite de la flèche
