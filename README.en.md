@@ -1,8 +1,9 @@
 # DeepSeek Harness — French interface
 
-**A multi-language delta patch for the DeepSeek Harness UI.** It adds French **without
-removing** Chinese or English, and the engine accepts **any language**: French is just one pack
-shipped with the repository.
+**French interface for DeepSeek Harness, in two methods.** The **archive delta patch** adds
+French **without removing** Chinese or English, and its engine accepts **any language**; the
+**profile pack** additionally adds the **microphone** (Gemini / ElevenLabs) and the **Clear Blue
+theme** (dark mode), without touching the archive.
 
 [French README](README.md) · [How it works](docs/comment-ca-marche.md) ·
 [Add a language](docs/ajouter-une-langue.md) · [Multi-language design](docs/multilingue.md)

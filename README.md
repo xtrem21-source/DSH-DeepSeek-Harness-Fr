@@ -1,8 +1,9 @@
 # DeepSeek Harness — interface française
 
-**Un patch delta multi-langue pour l'interface de DeepSeek Harness.** Il ajoute le français
-**sans retirer** le chinois ni l'anglais, et le moteur accepte **n'importe quelle langue** :
-le français n'est qu'un pack livré avec le dépôt.
+**Interface française pour DeepSeek Harness, en deux méthodes.** Le **patch delta de l'archive**
+ajoute le français **sans retirer** le chinois ni l'anglais, et son moteur accepte **n'importe
+quelle langue** ; le **pack du profil** ajoute en plus le **micro** (Gemini / ElevenLabs) et le
+**thème Clear Blue** (mode sombre), sans toucher à l'archive.
 
 [English summary](README.en.md) · [Comment ça marche](docs/comment-ca-marche.md) ·
 [Ajouter une langue](docs/ajouter-une-langue.md) · [Multi-langue](docs/multilingue.md)
