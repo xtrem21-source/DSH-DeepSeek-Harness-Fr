@@ -9,13 +9,13 @@ et ne modifie **pas** `app.asar` : elle ajoute des paquets au profil de l'applic
 | Paquet | Rôle |
 |---|---|
 | `dsh-fr-locale` | interface française : 47 namespaces (2 098 chaînes), 454 corrections hors service de traduction, 28 règles par motif |
-| `dsh-voice-input` | bouton micro à droite de la flèche d'envoi ; clic gauche dicte, clic droit ouvre les réglages (Gemini ou ElevenLabs) |
+| `dsh-voice-input` | bouton micro à droite de la flèche d'envoi ; clic gauche dicte, clic droit ouvre les réglages (Gemini, Groq ou ElevenLabs) |
 | `dsh-theme-clear-blue` | thème Clear Blue, palette sombre bleutée (porté de `official-clear-blue`) |
 
 ## Installation
 
 ```text
-1. Extraire l'archive DSH-Desktop-Patch-FR-windows-x64-1.0.0.zip
+1. Extraire l'archive DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip
    (ou copier pack-desktop/).
 2. Fermer DeepSeek Harness.
 3. Double-cliquer patcher.bat.

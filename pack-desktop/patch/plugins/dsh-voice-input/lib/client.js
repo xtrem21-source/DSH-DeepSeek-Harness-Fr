@@ -40,6 +40,7 @@ window.__ModuleLoader__.load({
 
   var LS = {
     key: 'ocVoice.geminiKey',
+    groqKey: 'ocVoice.groqKey',
     prov: 'ocVoice.provider',
     elevenKey: 'ocVoice.elevenKey',
     model: 'ocVoice.model',
@@ -249,6 +250,7 @@ window.__ModuleLoader__.load({
       '<label>Fournisseur de transcription</label>' +
       '<select id="ocvProv">' +
       '<option value="gemini">Gemini (Google)</option>' +
+      '<option value="groq">Groq — Whisper (rapide)</option>' +
       '<option value="elevenlabs">ElevenLabs — Scribe v2</option>' +
       '</select>' +
       '<span id="ocvGemBloc">' +
@@ -257,6 +259,11 @@ window.__ModuleLoader__.load({
       '<div class="ocv-hint">Clé gratuite sur <a id="ocvKeyLink">aistudio.google.com/apikey</a> — stockée uniquement sur cet ordinateur.</div>' +
       '<label>Modèle de transcription</label>' +
       '<input type="text" id="ocvModel" placeholder="' + DEFAULT_MODEL + '" spellcheck="false">' +
+      '</span>' +
+      '<span id="ocvGroqBloc">' +
+      '<label>Clé API Groq</label>' +
+      '<input type="password" id="ocvGroqKey" placeholder="gsk_..." autocomplete="off" spellcheck="false">' +
+      '<div class="ocv-hint">Gratuite sur <a id="ocvGroqLink">console.groq.com/keys</a> — modèle whisper-large-v3-turbo, audio envoyé à Groq.</div>' +
       '</span>' +
       '<span id="ocvElevenBloc">' +
       '<label>Clé API ElevenLabs</label>' +
@@ -368,6 +375,10 @@ window.__ModuleLoader__.load({
       setLs(LS.elevenKey, this.value.trim());
       log('cle ElevenLabs enregistree (longueur ' + this.value.trim().length + ')');
     });
+    panel.querySelector('#ocvGroqKey').addEventListener('change', function () {
+      setLs(LS.groqKey, this.value.trim());
+      log('cle Groq enregistree (longueur ' + this.value.trim().length + ')');
+    });
     function ouvrirLien(id, url) {
       var a = panel.querySelector(id);
       if (!a) return;
@@ -382,6 +393,7 @@ window.__ModuleLoader__.load({
       });
     }
     ouvrirLien('#ocvKeyLink', 'https://aistudio.google.com/apikey');
+    ouvrirLien('#ocvGroqLink', 'https://console.groq.com/keys');
     ouvrirLien('#ocvElevenLink', 'https://elevenlabs.io/app/settings/api-keys');
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.style.display === 'block') panel.style.display = 'none';
@@ -604,6 +616,7 @@ window.__ModuleLoader__.load({
       return;
     }
     ui.panel.querySelector('#ocvKey').value = ls(LS.key, '');
+    ui.panel.querySelector('#ocvGroqKey').value = ls(LS.groqKey, '');
     ui.panel.querySelector('#ocvElevenKey').value = ls(LS.elevenKey, '');
     ui.panel.querySelector('#ocvProv').value = ls(LS.prov, 'gemini');
     ui.panel.querySelector('#ocvModel').value = resolveModel();
@@ -617,13 +630,15 @@ window.__ModuleLoader__.load({
   }
 
   // Un seul fournisseur visible a la fois : Gemini montre sa cle et son modele,
-  // ElevenLabs seulement sa cle (le modele scribe_v2 est impose par le module).
+  // Groq et ElevenLabs seulement leur cle (leur modele est impose par le module).
   function applyProviderUi() {
     var ui = ensureUi();
     var prov = ls(LS.prov, 'gemini');
     var g = ui.panel.querySelector('#ocvGemBloc');
+    var q = ui.panel.querySelector('#ocvGroqBloc');
     var e = ui.panel.querySelector('#ocvElevenBloc');
-    if (g) g.style.display = prov === 'elevenlabs' ? 'none' : '';
+    if (g) g.style.display = prov === 'gemini' ? '' : 'none';
+    if (q) q.style.display = prov === 'groq' ? '' : 'none';
     if (e) e.style.display = prov === 'elevenlabs' ? '' : 'none';
   }
 
@@ -637,7 +652,9 @@ window.__ModuleLoader__.load({
 
   /* ---------- test des cles ---------- */
   function testApiKey() {
-    if (ls(LS.prov, 'gemini') === 'elevenlabs') { testElevenKey(); return; }
+    var prov = ls(LS.prov, 'gemini');
+    if (prov === 'elevenlabs') { testElevenKey(); return; }
+    if (prov === 'groq') { testGroqKey(); return; }
     var ui = ensureUi();
     var key = (ui.panel.querySelector('#ocvKey').value || ls(LS.key, '')).trim();
     if (!key) { setPanelStatus('Aucune clé Gemini saisie.', 'error'); return; }
@@ -697,20 +714,53 @@ window.__ModuleLoader__.load({
     });
   }
 
+  function testGroqKey() {
+    var ui = ensureUi();
+    var key = (ui.panel.querySelector('#ocvGroqKey').value || ls(LS.groqKey, '')).trim();
+    if (!key) { setPanelStatus('Aucune clé Groq saisie.', 'error'); return; }
+    setPanelStatus('Test de la clé Groq...', 'info');
+    fetch('https://api.groq.com/openai/v1/models', {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + key }
+    }).then(function (res) {
+      return res.text().then(function (t) {
+        if (res.ok) { setPanelStatus('Clé Groq valide.', 'ok'); return; }
+        var msg = 'HTTP ' + res.status;
+        try {
+          var j = JSON.parse(t);
+          var d = j && j.error;
+          if (d && d.message) msg = d.message;
+          else if (typeof d === 'string') msg = d;
+        } catch (e) {}
+        setPanelStatus('Clé Groq refusée : ' + msg, 'error');
+      });
+    }).catch(function (err) {
+      var m = err && err.name === 'TypeError' ? 'connexion à Groq impossible (réseau ou CORS)' : (err && err.message ? err.message : String(err));
+      setPanelStatus(m, 'error');
+      logErr('test cle Groq ECHEC: ' + m);
+    });
+  }
+
   function saveSettings() {
     var ui = ensureUi();
     var prov = ls(LS.prov, 'gemini');
     var key = ui.panel.querySelector('#ocvKey').value.trim();
+    var groqKey = ui.panel.querySelector('#ocvGroqKey').value.trim();
     var elevenKey = ui.panel.querySelector('#ocvElevenKey').value.trim();
     if (key) setLs(LS.key, key);
+    if (groqKey) setLs(LS.groqKey, groqKey);
     if (elevenKey) setLs(LS.elevenKey, elevenKey);
     var model = ui.panel.querySelector('#ocvModel').value.trim() || DEFAULT_MODEL;
     setLs(LS.model, model);
     setLs(LS.lang, ui.panel.querySelector('#ocvLang').value);
     setLs(LS.auto, ui.panel.querySelector('#ocvAuto').checked ? '1' : '0');
     setLs(LS.sendKw, ui.panel.querySelector('#ocvSendKw').checked ? '1' : '0');
-    var nom = prov === 'elevenlabs' ? 'ElevenLabs' : 'Gemini';
-    var choisie = String(prov === 'elevenlabs' ? (elevenKey || ls(LS.elevenKey, '')) : (key || ls(LS.key, ''))).trim();
+    var nom = prov === 'elevenlabs' ? 'ElevenLabs' : (prov === 'groq' ? 'Groq' : 'Gemini');
+    var choisie = String(
+      prov === 'elevenlabs' ? (elevenKey || ls(LS.elevenKey, ''))
+        : prov === 'groq' ? (groqKey || ls(LS.groqKey, ''))
+          : (key || ls(LS.key, ''))
+    ).trim();
     if (!choisie) {
       setPanelStatus('Réglages enregistrés, mais aucune clé ' + nom + ' : la dictée échouera.', 'error');
       return;
@@ -959,7 +1009,8 @@ window.__ModuleLoader__.load({
       var msg = err && err.message ? err.message : String(err);
       logErr('transcription ECHEC apres ' + (Date.now() - t0) + ' ms: ' + msg);
       if (msg === 'NO_KEY') {
-        var nom = ls(LS.prov, 'gemini') === 'elevenlabs' ? 'ElevenLabs' : 'Gemini';
+        var provActif = ls(LS.prov, 'gemini');
+        var nom = provActif === 'elevenlabs' ? 'ElevenLabs' : (provActif === 'groq' ? 'Groq' : 'Gemini');
         showBubble('Aucune clé API ' + nom + '.<br>Faites un clic DROIT sur le micro pour en enregistrer une.',
           'error', 15000);
         togglePanel();
@@ -1081,8 +1132,52 @@ window.__ModuleLoader__.load({
     });
   }
 
+  /* ---------- Groq Whisper (batch) ----------
+   * Endpoint compatible OpenAI : POST /openai/v1/audio/transcriptions,
+   * multipart file + model, en-tete Authorization: Bearer.
+   * Le WAV 16 kHz mono produit par toWav16k est accepte tel quel. */
+  var GROQ_URL = 'https://api.groq.com/openai/v1/audio/transcriptions';
+  var GROQ_MODEL = 'whisper-large-v3-turbo';
+
+  function transcribeGroq(blob) {
+    var key = ls(LS.groqKey, '').trim();
+    if (!key) { logErr('transcribeGroq: aucune cle Groq'); return Promise.reject(new Error('NO_KEY')); }
+    return toWav16k(blob).then(function (wav) {
+      var fd = new FormData();
+      fd.append('file', wav, 'audio.wav');
+      fd.append('model', GROQ_MODEL);
+      var lang = ls(LS.lang, 'fr');
+      if (lang && lang !== 'auto') { fd.append('language', String(lang).slice(0, 2)); }
+      fd.append('response_format', 'json');
+      fd.append('temperature', '0');
+      log('transcribeGroq: envoi de ' + wav.size + ' octets (' + GROQ_MODEL + ')');
+      return fetch(GROQ_URL, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + key },
+        body: fd
+      }).then(function (res) {
+        return res.json().catch(function () { return null; }).then(function (json) {
+          if (!res.ok) {
+            var d = json && json.error && json.error.message ? json.error.message : 'HTTP ' + res.status;
+            if (res.status === 401 || res.status === 403) d = 'clé refusée — ' + d;
+            else if (res.status === 429) d = 'quota épuisé — ' + d;
+            throw new Error('Groq : ' + d);
+          }
+          var out = json && json.text ? String(json.text).trim() : '';
+          if (!out) throw new Error('Groq : aucune parole detectee');
+          return out;
+        });
+      });
+    }).catch(function (err) {
+      if (err && err.name === 'TypeError') throw new Error('connexion à Groq impossible (vérifiez l\'accès à Internet)');
+      throw err;
+    });
+  }
+
   function transcribe(blob) {
-    if (ls(LS.prov, 'gemini') === 'elevenlabs') { return transcribeEleven(blob); }
+    var prov = ls(LS.prov, 'gemini');
+    if (prov === 'elevenlabs') { return transcribeEleven(blob); }
+    if (prov === 'groq') { return transcribeGroq(blob); }
     return resolveKey().then(function (key) {
       if (!key) { logErr('transcribe: aucune cle Gemini (localStorage ni config app)'); throw new Error('NO_KEY'); }
       log('transcribe: cle trouvee (longueur ' + key.length + ')');

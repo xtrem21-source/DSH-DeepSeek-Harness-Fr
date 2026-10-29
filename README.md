@@ -2,7 +2,7 @@
 
 **Interface française pour DeepSeek Harness, en deux méthodes.** Le **patch delta de l'archive**
 ajoute le français **sans retirer** le chinois ni l'anglais, et son moteur accepte **n'importe
-quelle langue** ; le **pack du profil** ajoute en plus le **micro** (Gemini / ElevenLabs) et le
+quelle langue** ; le **pack du profil** ajoute en plus le **micro** (Gemini / Groq / ElevenLabs) et le
 **thème Clear Blue** (mode sombre), sans toucher à l'archive.
 
 [English summary](README.en.md) · [Comment ça marche](docs/comment-ca-marche.md) ·
@@ -17,7 +17,7 @@ quelle langue** ; le **pack du profil** ajoute en plus le **micro** (Gemini / El
 | Où | `src/`, `scripts/`, `locales/` (ce README) | [`pack-desktop/`](pack-desktop/LISEZ-MOI.txt) |
 | Ce qui est modifié | 3 fichiers internes de `app.asar` | le profil DSH (`~\.dsh\profiles\desktop`) |
 | Langues | tout pack de `locales/`, sélecteur dans l'app | français livré, bascule FR / EN |
-| Micro | — | bouton de dictée (Gemini ou ElevenLabs) |
+| Micro | — | bouton de dictée (Gemini, Groq ou ElevenLabs) |
 | Thème | — | Clear Blue (mode sombre) |
 | Installation | `npm ci`, puis `scripts\Appliquer-le-patch.cmd` | dézipper, double-clic sur `patcher.bat` |
 | Retour arrière | `scripts\Restaurer-l-original.cmd` | `pack-desktop\restaurer.bat` |
@@ -29,7 +29,7 @@ ne modifie pas `app.asar` (la permission micro y est déjà native dans la versi
 
 Interface française complète, bouton micro et thème Clear Blue, sans réemballer l'archive.
 
-1. Télécharger **`DSH-Desktop-Patch-FR-windows-x64-1.0.0.zip`** (racine du dépôt) et l'extraire,
+1. Télécharger **`DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip`** (racine du dépôt) et l'extraire,
    ou cloner le dépôt et aller dans `pack-desktop/`.
 2. Fermer DeepSeek Harness, puis double-cliquer **`patcher.bat`**.
 3. Rouvrir l'application : l'interface est en français, le micro est à droite de la flèche

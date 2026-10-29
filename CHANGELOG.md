@@ -1,5 +1,18 @@
 # Journal des versions
 
+## 1.1.1 — 2026-10-29
+
+**Micro : troisième fournisseur, Groq (Whisper).**
+
+- Sélecteur du panneau : **Gemini, Groq ou ElevenLabs**, un seul actif à la fois.
+- Groq : `POST https://api.groq.com/openai/v1/audio/transcriptions`, `model=whisper-large-v3-turbo`,
+  `Authorization: Bearer`, WAV 16 kHz ; bouton « Tester la clé API » via `GET /v1/models`.
+- La clé Groq est conservée séparément (`ocVoice.groqKey`) ; changer de fournisseur n'efface
+  aucune des trois clés.
+- Archive renommée `DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip`.
+- Interface et syntaxe vérifiées ; **transcription Groq exécutée avec une vraie clé et confirmée
+  à l'usage** le 29/10.
+
 ## 1.1.0 — 2026-10-29
 
 **Seconde méthode : pack du profil (`pack-desktop/`).**

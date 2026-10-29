@@ -9,7 +9,7 @@ trois choses :
   1. l'interface en francais, avec un menu de langue FR / EN qui bascule
      instantanement ;
   2. un bouton micro a droite du bouton d'envoi, avec un panneau de reglages
-     accessible par CLIC DROIT pour saisir la cle API (Gemini ou ElevenLabs),
+     accessible par CLIC DROIT pour saisir la cle API (Gemini, Groq ou ElevenLabs),
      et la transcription a partir de cette seule cle ;
   3. le theme Clear Blue (palette sombre bleutee, portee du pack Reasonix
      Studio « official-clear-blue »), applique en mode sombre.
@@ -70,9 +70,11 @@ la propriete CSS `order`, ce qui ne le sort pas de l'arbre React.
   - CLIC DROIT   : ouvre le panneau de reglages.
 
 Le panneau contient :
-  - Fournisseur de transcription  (Gemini ou ElevenLabs — un seul actif a la fois)
+  - Fournisseur de transcription  (Gemini, Groq ou ElevenLabs — un seul actif a la fois)
   - Cle API Gemini  (cle gratuite sur aistudio.google.com/apikey)
   - Modele de transcription  (par defaut gemini-3.5-flash-lite — Gemini seulement)
+  - Cle API Groq  (cle gratuite sur console.groq.com/keys ; modele whisper-large-v3-turbo
+    impose, audio envoye a Groq, transcription APRES l'arret)
   - Cle API ElevenLabs  (cle gratuite sur elevenlabs.io/app/settings/api-keys ; modele
     scribe_v2 impose, audio envoye a ElevenLabs, transcription APRES l'arret)
   - Langue parlee  (Francais par defaut)

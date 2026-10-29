@@ -2,7 +2,7 @@
 
 **French interface for DeepSeek Harness, in two methods.** The **archive delta patch** adds
 French **without removing** Chinese or English, and its engine accepts **any language**; the
-**profile pack** additionally adds the **microphone** (Gemini / ElevenLabs) and the **Clear Blue
+**profile pack** additionally adds the **microphone** (Gemini / Groq / ElevenLabs) and the **Clear Blue
 theme** (dark mode), without touching the archive.
 
 [French README](README.md) · [How it works](docs/comment-ca-marche.md) ·
@@ -19,7 +19,7 @@ theme** (dark mode), without touching the archive.
 | Where | `src/`, `scripts/`, `locales/` (this README) | [`pack-desktop/`](pack-desktop/LISEZ-MOI.txt) |
 | What is modified | 3 internal files of `app.asar` | the DSH profile (`~\.dsh\profiles\desktop`) |
 | Languages | any pack in `locales/`, selector in the app | French shipped, FR / EN switch |
-| Microphone | — | dictation button (Gemini or ElevenLabs) |
+| Microphone | — | dictation button (Gemini, Groq or ElevenLabs) |
 | Theme | — | Clear Blue (dark mode) |
 | Install | `npm ci`, then `scripts\Appliquer-le-patch.cmd` | unzip, double-click `patcher.bat` |
 | Rollback | `scripts\Restaurer-l-original.cmd` | `pack-desktop\restaurer.bat` |
@@ -31,7 +31,7 @@ Both methods can coexist: they do not touch the same files. The profile pack doe
 
 Full French interface, microphone button and Clear Blue theme, without repacking the archive.
 
-1. Download **`DSH-Desktop-Patch-FR-windows-x64-1.0.0.zip`** (repository root) and extract it,
+1. Download **`DSH-Desktop-Patch-FR-windows-x64-1.1.1.zip`** (repository root) and extract it,
    or clone the repository and open `pack-desktop/`.
 2. Close DeepSeek Harness, then double-click **`patcher.bat`**.
 3. Reopen the app: the interface is in French, the microphone sits right of the send arrow
