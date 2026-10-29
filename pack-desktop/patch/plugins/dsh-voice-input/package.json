@@ -1,0 +1,19 @@
+{
+  "name": "dsh-voice-input",
+  "version": "1.0.0",
+  "description": "Bouton micro avec panneau de reglages au clic droit (cle API Gemini, modele, langue, envoi automatique), adapte de la methodologie open-cowork-micro.",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}

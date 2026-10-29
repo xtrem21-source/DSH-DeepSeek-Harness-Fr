@@ -1,0 +1,17 @@
+{
+  "autoRefresh.enable": "Activer le rafraîchissement automatique",
+  "autoRefresh.disable": "Désactiver le rafraîchissement automatique",
+  "wrap.enable": "Activer le retour à la ligne",
+  "wrap.disable": "Désactiver le retour à la ligne",
+  "wrap.aria": "Retour à la ligne",
+  "viewer.text": "Texte brut",
+  "error.notFound": "Fichier introuvable. Il a peut-être été déplacé ou supprimé.",
+  "error.tooLarge": "Cette page dépasse la limite de {limit} et ne peut pas être lue.",
+  "error.notText": "L'aperçu n'est pas encore disponible pour ce type de fichier.",
+  "error.notRegularFile": "Ce n'est pas un fichier ordinaire, rien à afficher.",
+  "error.unavailable": "Échec de la lecture : {message}",
+  "viewer.label": "Markdown",
+  "code.copy": "Copier",
+  "code.copied": "Copié",
+  "footnotes": "Notes de bas de page"
+}

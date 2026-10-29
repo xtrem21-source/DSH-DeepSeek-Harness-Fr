@@ -1,0 +1,35 @@
+# --- DSH Desktop patch FR : debut ---
+# Bloc insere par patcher.bat dans cordis.patch.yml du profil actif.
+# Ne pas editer entre les deux marqueurs : restaurer.bat s'en sert pour le retirer.
+- insert:
+    - id: dsh-fr-locale
+      name: dsh-fr-locale
+
+# Micro de la methodologie open-cowork-micro : bouton a droite du bouton
+# d'envoi, panneau de reglages au CLIC DROIT (cle API Gemini, modele, langue,
+# envoi automatique), texte insere dans le champ puis envoye ou non.
+- insert:
+    - id: dsh-voice-input
+      name: dsh-voice-input
+
+# Le micro natif de l'editeur ferait un second bouton, et son panneau n'offre
+# ni clic droit ni saisie directe de la cle. On le desactive.
+- id: ui-voice-input
+  disabled: true
+
+# Theme Clear Blue : palette sombre bleutee, portee depuis le pack Reasonix
+# Studio (official-clear-blue). Le CSS ne vise que le mode sombre : on fixe
+# donc la preference.
+- insert:
+    - id: dsh-theme-clear-blue
+      name: dsh-theme-clear-blue
+- id: ui-theme
+  name: "@deepseek-ai/dsh-client-ui-theme"
+  config:
+    preference: dark
+
+# La langue de l'interface, appliquee au chargement du profil.
+- id: locale
+  config:
+    preference: fr
+# --- DSH Desktop patch FR : fin ---

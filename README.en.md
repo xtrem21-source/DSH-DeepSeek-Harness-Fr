@@ -11,6 +11,45 @@ shipped with the repository.
 
 ---
 
+## Two methods in this repository
+
+| | **Method 1 — delta patch of the archive** | **Method 2 — profile pack** |
+|---|---|---|
+| Where | `src/`, `scripts/`, `locales/` (this README) | [`pack-desktop/`](pack-desktop/LISEZ-MOI.txt) |
+| What is modified | 3 internal files of `app.asar` | the DSH profile (`~\.dsh\profiles\desktop`) |
+| Languages | any pack in `locales/`, selector in the app | French shipped, FR / EN switch |
+| Microphone | — | dictation button (Gemini or ElevenLabs) |
+| Theme | — | Clear Blue (dark mode) |
+| Install | `npm ci`, then `scripts\Appliquer-le-patch.cmd` | unzip, double-click `patcher.bat` |
+| Rollback | `scripts\Restaurer-l-original.cmd` | `pack-desktop\restaurer.bat` |
+
+Both methods can coexist: they do not touch the same files. The profile pack does not modify
+`app.asar` (microphone permission is already native in the targeted version).
+
+### Method 2 — profile pack (`pack-desktop/`)
+
+Full French interface, microphone button and Clear Blue theme, without repacking the archive.
+
+1. Download **`DSH-Desktop-Patch-FR-windows-x64-1.0.0.zip`** (repository root) and extract it,
+   or clone the repository and open `pack-desktop/`.
+2. Close DeepSeek Harness, then double-click **`patcher.bat`**.
+3. Reopen the app: the interface is in French, the microphone sits right of the send arrow
+   (left click to dictate, right click for the API key).
+
+> **Version.** Tested on **DeepSeek Harness 0.2.1-rc.3** (nightly channel). The pack is expected
+> to keep working after an app update as long as the plugin structure does not change; **this is
+> not guaranteed**. If it stops working, run `patcher.bat` again and check on screen; if it fails,
+> `restaurer.bat` restores the profile to its previous state.
+
+The pack ships French, but the mechanism only knows dictionaries: strings live in
+`patch/plugins/dsh-fr-locale/fr/*.json` (47 files, 2,098 strings) plus the correction table
+`_correctifs.json` (454 entries, 28 rules). `node outils/assembler-fr.mjs` rebuilds
+`lib/client.js`. For another language: duplicate the folder, change `LANGUE` (`id`, `label`,
+`fallback`) in the generator, translate the values, regenerate. Details (FR):
+[docs/pack-desktop.md](docs/pack-desktop.md).
+
+---
+
 ## What it does
 
 | Item | Delta |

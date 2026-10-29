@@ -1,0 +1,21 @@
+{
+  "type.label": "Navigateur",
+  "guide.title": "Navigateur",
+  "guide.description": "Parcourir des pages Web",
+  "shortcut.noSession": "Ouvrez d'abord une session",
+  "address.placeholder": "Saisissez une adresse HTTP(S)",
+  "address.changed": "URL modifiée",
+  "sandbox.disable": "Désactiver les restrictions du bac à sable",
+  "sandbox.enable": "Rétablir les restrictions du bac à sable",
+  "sandbox.warning": "Les restrictions du bac à sable sont désactivées ; la page peut faire naviguer l'application de premier niveau et utiliser les téléchargements, les boîtes de dialogue modales et les verrous de saisie.",
+  "restore.previous": "Ouvert précédemment",
+  "restore.action": "Restaurer la page",
+  "error.empty": "Saisissez une adresse.",
+  "error.invalid": "Cette adresse est invalide ou trop longue.",
+  "error.protocol": "Seules les adresses HTTP et HTTPS sont prises en charge ; utilisez l'aperçu de document pour les fichiers locaux.",
+  "error.credentials": "Les adresses ne peuvent pas contenir de nom d'utilisateur ni de mot de passe.",
+  "error.application-origin": "Le navigateur intégré ne peut pas ouvrir l'application DSH elle-même.",
+  "load.failed": "La page n'a pas pu se charger ; rechargez-la ou ouvrez-la dans le navigateur du système.",
+  "load.failed.detail": "Échec du chargement de la page ({code}) : {description}",
+  "address.unknown": "La page a navigué ; ce conteneur ne peut pas lire sa nouvelle URL."
+}

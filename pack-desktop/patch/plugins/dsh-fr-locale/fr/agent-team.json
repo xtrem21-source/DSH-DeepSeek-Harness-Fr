@@ -1,0 +1,11 @@
+{
+  "task.expand": "Afficher plus",
+  "task.collapse": "Afficher moins",
+  "memberStatus.running": "En cours",
+  "memberStatus.inactive": "Inactif",
+  "memberStatus.provisioning": "Provisionnement",
+  "memberStatus.failed": "Échec",
+  "status.pending": "En attente",
+  "status.in_progress": "En cours",
+  "status.completed": "Terminé"
+}

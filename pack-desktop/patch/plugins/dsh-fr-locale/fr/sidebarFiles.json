@@ -1,0 +1,13 @@
+{
+  "shortcut.noSession": "Sélectionnez d'abord une session",
+  "type.label": "Fichiers",
+  "guide.title": "Fichiers de l'espace de travail",
+  "guide.description": "Parcourir les fichiers de l'espace de travail de cette session",
+  "autoRefresh.enable": "Activer le rafraîchissement automatique",
+  "autoRefresh.disable": "Désactiver le rafraîchissement automatique",
+  "entry.other": "Ni un fichier ni un dossier : impossible de l'ouvrir.",
+  "error.notFound": "Ce dossier a disparu. Il a peut-être été déplacé ou supprimé.",
+  "error.outsideWorkspace": "Ce dossier est hors de l'espace de travail ; le panneau latéral ne le lira pas.",
+  "error.notDirectory": "Ce n'est pas un dossier.",
+  "error.unavailable": "Échec de la lecture : {message}"
+}

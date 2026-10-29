@@ -1,5 +1,24 @@
 # Journal des versions
 
+## 1.1.0 — 2026-10-29
+
+**Seconde méthode : pack du profil (`pack-desktop/`).**
+
+- Interface française complète : 47 namespaces (2 098 chaînes), 454 corrections hors service de
+  traduction, 28 règles par motif. L'anglais du shell (menu du compte, modes d'accès, sections
+  Compte et Modèles, préréglages d'agent) et les descriptions des extensions intégrées sont
+  couverts.
+- Micro : bouton à droite de la flèche d'envoi, monté dans l'emplacement React
+  `conversation.input.activity` — il survit donc aux envois de message. Panneau de réglages au
+  clic droit, Gemini ou ElevenLabs.
+- Thème Clear Blue (palette sombre bleutée, porté de `official-clear-blue`).
+- `patcher.bat` sans argument : détection par argument, dossiers connus, chaque disque monté et
+  registre de désinstallation ; fermeture des deux noms de processus ; sauvegarde et manifeste
+  SHA-256 ; idempotence ; vérification des marqueurs.
+- Archive prête à extraire : `DSH-Desktop-Patch-FR-windows-x64-1.0.0.zip`.
+- Testé sur **DeepSeek Harness 0.2.1-rc.3**. Le pack est prévu pour continuer à fonctionner après
+  une mise à jour de l'application, **sans garantie**.
+
 ## 1.0.0 — 2026-10-17
 
 **Première version publiable.**

@@ -12,3 +12,7 @@ sauvegarde/
 *.log
 .DS_Store
 Thumbs.db
+
+# Pack du profil : sorties locales, jamais versionnees
+pack-desktop/logs/
+pack-desktop/sauvegarde/

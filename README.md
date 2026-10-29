@@ -9,6 +9,45 @@ le français n'est qu'un pack livré avec le dépôt.
 
 ---
 
+## Deux méthodes dans ce dépôt
+
+| | **Méthode 1 — patch delta de l'archive** | **Méthode 2 — pack du profil** |
+|---|---|---|
+| Où | `src/`, `scripts/`, `locales/` (ce README) | [`pack-desktop/`](pack-desktop/LISEZ-MOI.txt) |
+| Ce qui est modifié | 3 fichiers internes de `app.asar` | le profil DSH (`~\.dsh\profiles\desktop`) |
+| Langues | tout pack de `locales/`, sélecteur dans l'app | français livré, bascule FR / EN |
+| Micro | — | bouton de dictée (Gemini ou ElevenLabs) |
+| Thème | — | Clear Blue (mode sombre) |
+| Installation | `npm ci`, puis `scripts\Appliquer-le-patch.cmd` | dézipper, double-clic sur `patcher.bat` |
+| Retour arrière | `scripts\Restaurer-l-original.cmd` | `pack-desktop\restaurer.bat` |
+
+Les deux méthodes peuvent coexister : elles ne touchent pas les mêmes fichiers. Le pack du profil
+ne modifie pas `app.asar` (la permission micro y est déjà native dans la version visée).
+
+### Méthode 2 — pack du profil (`pack-desktop/`)
+
+Interface française complète, bouton micro et thème Clear Blue, sans réemballer l'archive.
+
+1. Télécharger **`DSH-Desktop-Patch-FR-windows-x64-1.0.0.zip`** (racine du dépôt) et l'extraire,
+   ou cloner le dépôt et aller dans `pack-desktop/`.
+2. Fermer DeepSeek Harness, puis double-cliquer **`patcher.bat`**.
+3. Rouvrir l'application : l'interface est en français, le micro est à droite de la flèche
+   d'envoi (clic gauche pour dicter, clic droit pour la clé API).
+
+> **Version.** Testé sur **DeepSeek Harness 0.2.1-rc.3** (canal `nightly`). Le pack continue de
+> fonctionner après une mise à jour de l'application tant que la structure des plugins ne change
+> pas ; **ce n'est pas garanti**. S'il cesse de fonctionner, relancer `patcher.bat` puis vérifier
+> à l'écran ; en cas d'échec, `restaurer.bat` remet le profil dans son état d'avant.
+
+Le pack est livré en français, mais le mécanisme ne connaît que des dictionnaires : les chaînes
+vivent dans `patch/plugins/dsh-fr-locale/fr/*.json` (47 fichiers, 2 098 chaînes) plus la table de
+corrections `_correctifs.json` (454 entrées, 28 règles). `node outils/assembler-fr.mjs` reconstruit
+`lib/client.js`. Pour une autre langue : dupliquer le dossier, changer `LANGUE` (`id`, `label`,
+`fallback`) dans le générateur, traduire les valeurs, régénérer. Détails :
+[docs/pack-desktop.md](docs/pack-desktop.md).
+
+---
+
 ## Ce que fait le patch
 
 | Point | Delta |

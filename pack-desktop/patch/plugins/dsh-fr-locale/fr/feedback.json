@@ -1,0 +1,22 @@
+{
+  "action.like": "Bonne réponse",
+  "action.likeActive": "Retirer l'évaluation",
+  "action.dislike": "Mauvaise réponse",
+  "action.dislikeActive": "Retirer l'évaluation",
+  "dialog.title": "Envoyer un retour",
+  "dialog.categories": "Catégorie du retour",
+  "dialog.detail": "Détails du retour",
+  "dialog.hint": "Ajoutez des détails pour nous aider à progresser. Votre envoi inclura le journal de la conversation en cours.",
+  "category.task-result": "Résultat de la tâche",
+  "category.instruction-following": "Compréhension et suivi des instructions",
+  "category.product-interaction": "Fonctionnalités et interaction du produit",
+  "category.service-stability": "Stabilité et rapidité",
+  "category.resource-cost": "Consommation de ressources et coût",
+  "category.security-privacy-permission": "Sécurité, confidentialité et permissions",
+  "category.other": "Autre",
+  "toast.recorded": "Merci pour votre retour",
+  "error.conflict": "Ce retour a été modifié ailleurs ; l'état le plus récent est affiché",
+  "error.load": "Impossible de charger le retour",
+  "error.generic": "Impossible d'enregistrer le retour",
+  "error.noteTooLarge": "La description est trop longue ; raccourcissez-la et envoyez à nouveau"
+}

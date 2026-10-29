@@ -10,6 +10,9 @@ DeepSeek. « DeepSeek » et « DeepSeek Harness » sont les marques de leurs tit
 | Contenu | Nature | Licence |
 |---|---|---|
 | `src/`, `scripts/`, `tests/` | code original | MIT |
+| `pack-desktop/outils/`, `pack-desktop/*.bat`, `pack-desktop/patch/plugins/dsh-voice-input/` | code original | MIT |
+| `pack-desktop/patch/plugins/dsh-fr-locale/*.json` | chaînes traduites à partir de l'interface | MIT pour l'apport des contributeurs, dans la mesure où il peut être concédé |
+| `pack-desktop/patch/plugins/dsh-theme-clear-blue/` | portage du thème `official-clear-blue` | MIT pour le portage ; le thème d'origine reste à ses auteurs |
 | `locales/fr/web.json`, `locales/fr/shell.json` | chaînes traduites à partir de l'interface | MIT pour l'apport des contributeurs, dans la mesure où il peut être concédé |
 | `docs/`, `README*` | documentation | MIT |
 

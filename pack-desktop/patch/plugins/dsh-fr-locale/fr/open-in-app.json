@@ -1,0 +1,17 @@
+{
+  "open.title": "Ouvrir dans {app}",
+  "path.appDefault": "{app} (par défaut)",
+  "path.appsError": "Impossible de charger les applications",
+  "shortcut.busy": "Ouverture de l'espace de travail",
+  "shortcut.unavailable": "Espace de travail actuel ou application locale indisponible",
+  "open.tooltip": "Ouvrir localement",
+  "path.open": "Ouvrir",
+  "path.more": "Autres façons d'ouvrir",
+  "path.reveal": "Afficher l'emplacement du fichier",
+  "path.openError": "Impossible d'ouvrir. Réessayez.",
+  "path.revealError": "Impossible d'afficher l'emplacement du fichier. Réessayez.",
+  "app.finder": "Finder",
+  "app.explorer": "Explorateur de fichiers",
+  "app.filemanager": "Fichiers",
+  "app.terminal": "Terminal"
+}

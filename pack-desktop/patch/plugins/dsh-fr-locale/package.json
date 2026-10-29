@@ -1,0 +1,21 @@
+{
+  "name": "dsh-fr-locale",
+  "version": "1.0.0",
+  "description": "Pack de langue francaise pour DSH Desktop : ajoute fr et traduit les namespaces de l'interface.",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-locale"
+      ],
+      "platform": "web"
+    }
+  }
+}

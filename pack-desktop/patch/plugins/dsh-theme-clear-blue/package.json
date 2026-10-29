@@ -1,0 +1,19 @@
+{
+  "name": "dsh-theme-clear-blue",
+  "version": "1.0.0",
+  "description": "Thème Clear Blue pour DSH Desktop — portage du pack Reasonix Studio official-clear-blue.",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}

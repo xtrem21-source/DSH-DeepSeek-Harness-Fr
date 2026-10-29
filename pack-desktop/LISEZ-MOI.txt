@@ -1,0 +1,221 @@
+DSH Desktop patch FR
+====================
+
+Ce que fait ce dossier
+----------------------
+Il ajoute a l'application DSH Desktop, telle qu'elle est installee sur ce poste,
+trois choses :
+
+  1. l'interface en francais, avec un menu de langue FR / EN qui bascule
+     instantanement ;
+  2. un bouton micro a droite du bouton d'envoi, avec un panneau de reglages
+     accessible par CLIC DROIT pour saisir la cle API (Gemini ou ElevenLabs),
+     et la transcription a partir de cette seule cle ;
+  3. le theme Clear Blue (palette sombre bleutee, portee du pack Reasonix
+     Studio « official-clear-blue »), applique en mode sombre.
+
+Le micro vient de la methodologie open-cowork-micro (script autonome
+voice-input.js), adaptee a DSH Desktop. Aucun fichier de l'application n'est
+modifie, sauf app.asar pour la permission micro (voir plus bas).
+
+
+AVANT DE COMMENCER
+------------------
+- Le dossier peut etre range n'importe ou : Bureau, D:, cle USB. Les scripts
+  resolvent leur propre chemin, aucun chemin absolu n'est code en dur.
+- Aucune elevation de privileges n'est demandee.
+- Node.js doit etre installe (node -v). Il sert au patch de permission micro ;
+  sans lui, tout le reste s'applique quand meme.
+
+
+COMMENT APPLIQUER
+-----------------
+Double-cliquez sur  patcher.bat
+
+Le script :
+  - FERME l'application de force si elle tourne (taskkill) et attend sa
+    disparition effective : l'archive et le profil doivent etre libres.
+    Deux noms d'executable sont reconnus : "DSH Desktop.exe" et
+    "DeepSeek Harness.exe" ;
+  - detecte l'application, dans cet ordre : chemin passe en argument,
+    %%LOCALAPPDATA%%\Programs\DSH Desktop et \DeepSeek Harness,
+    %%ProgramFiles%% et %%ProgramFiles(x86)%% (memes noms), chaque disque
+    monte (X:\DeepSeek Harness, X:\DSH Desktop), puis les entrees de
+    desinstallation du registre dont le nom contient "DeepSeek Harness"
+    ou "DSH Desktop". Aucun chemin n'est code en dur ; si rien ne repond,
+    le message liste les chemins essayes ;
+  - detecte le profil reellement utilise
+    (%%APPDATA%%\dsh-desktop\harness\profiles\web, sinon %%USERPROFILE%%\.dsh) ;
+  - sauvegarde les fichiers d'origine dans  sauvegarde\<horodatage>\  avec un
+    manifeste donnant chemin, taille et empreinte SHA-256 ;
+  - copie les paquets du patch dans le profil ;
+  - accorde la permission micro (patch de app.asar, sauvegarde une seule fois) ;
+  - ajoute un bloc delimite au fichier de configuration du profil ;
+  - ecrit un journal detaille dans  logs\patch-<horodatage>.log  (et une copie
+    dans  logs\dernier.log).
+
+Le patch est idempotent : le relancer ne duplique rien et ne corrompt rien.
+
+Puis relancez DSH Desktop.
+
+
+DANS L'APPLICATION : LE MICRO
+-----------------------------
+Le bouton micro se trouve dans la barre de saisie, juste A DROITE de la fleche
+d'envoi, comme dans Reasonix Studio. Il est rendu par React (emplacement
+conversation.input.activity) ; seul son conteneur est remis apres la fleche par
+la propriete CSS `order`, ce qui ne le sort pas de l'arbre React.
+
+  - CLIC GAUCHE  : demarre / arrete l'enregistrement.
+  - CLIC DROIT   : ouvre le panneau de reglages.
+
+Le panneau contient :
+  - Fournisseur de transcription  (Gemini ou ElevenLabs — un seul actif a la fois)
+  - Cle API Gemini  (cle gratuite sur aistudio.google.com/apikey)
+  - Modele de transcription  (par defaut gemini-3.5-flash-lite — Gemini seulement)
+  - Cle API ElevenLabs  (cle gratuite sur elevenlabs.io/app/settings/api-keys ; modele
+    scribe_v2 impose, audio envoye a ElevenLabs, transcription APRES l'arret)
+  - Langue parlee  (Francais par defaut)
+  - Insérer le texte dans le champ de saisie
+  - Envoi automatique  (le message part des l'arret, sinon c'est vous)
+  - bouton « Tester la cle API »  (teste le fournisseur selectionne)
+
+Les reglages sont stockes dans le localStorage de l'application, sur cet
+ordinateur uniquement. La cle n'est ecrite ni dans un journal, ni dans un
+fichier du dossier de livraison. Attention : DSH Desktop n'a pas de coffre
+chiffre — les deux cles sont donc en clair dans le localStorage du profil
+(contrairement au pack Reasonix, qui les chiffre par DPAPI).
+
+
+DANS L'APPLICATION : LA LANGUE
+------------------------------
+Reglages > Langue > Francais. La bascule est immediate.
+
+
+LE PATCH DE L'APPLICATION (permission micro)
+-------------------------------------------
+DSH Desktop definit une seule politique de permission et n'y autorise que le
+presse-papiers et les notifications. La permission micro (« media ») n'y figure
+pas : getUserMedia echoue en NotAllowedError AVANT meme que Windows ne soit
+consulte, et le bouton micro ne peut rien demarrer.
+
+patcher.bat corrige cela :
+  - il sauvegarde app.asar (352 Mo) dans sauvegarde\<horodatage>\ ;
+  - il remplace la condition de permission par une expression de LONGUEUR
+    IDENTIQUE, ce qui evite de reconstruire l'archive ; l'empreinte SHA-256 de
+    l'entree concernee est recalculee ;
+  - il verifie ensuite que le patch est en place.
+
+Les deux garde-fous d'origine sont conserves : la page demandeuse doit etre
+l'application elle-meme et la frame principale.
+
+Consequences a connaitre :
+  - ce patch elargit les permissions accordees a l'application (toutes, pas
+    seulement le micro) ; c'est le prix d'un remplacement a longueur constante ;
+  - une mise a jour de DSH Desktop remplace app.asar et efface ce patch : le
+    micro se rebloque. Relancez patcher.bat apres chaque mise a jour ;
+  - si l'application refusait de demarrer apres patch, restaurer.bat remet
+    app.asar d'origine. C'est la premiere chose a essayer.
+
+
+COMMENT REVENIR EN ARRIERE
+--------------------------
+Double-cliquez sur  restaurer.bat
+
+  - il liste les sauvegardes disponibles et applique la plus recente ;
+    pour en choisir une autre :  restaurer.bat 3   (numero de la liste) ;
+  - il restaure chaque fichier puis le verifie contre le manifeste
+    (taille + SHA-256) et ecrit le resultat au journal ;
+  - il retire les paquets installes par le patch ;
+  - si la sauvegarde choisie contient app.asar, l'archive d'origine est
+    restauree : le micro se rebloque, tout le reste continue de fonctionner.
+
+Le test de restauration a ete execute avant livraison.
+
+
+CE QUE CONTIENT LE DOSSIER
+--------------------------
+  patcher.bat                  lanceur d'application (double-clic)
+  restaurer.bat                lanceur de restauration (double-clic)
+  LISEZ-MOI.txt                ce fichier
+  TABLE-EXIGENCES.md           table exigence -> preuve, avec colonne « non fait »
+  observations.md              idees hors perimetre, notees et non implementees
+  patch\
+    dsh-desktop-fr.patch.yml   bloc ajoute au profil (entre deux marqueurs)
+    plugins\
+      dsh-fr-locale\           pack de langue francais
+      dsh-voice-input\         bouton micro + panneau de reglages au clic droit
+      dsh-theme-clear-blue\    theme Clear Blue (palette sombre bleutee)
+  outils\
+    patcher.ps1                logique d'application
+    restaurer.ps1              logique de restauration
+    patcher-asar.mjs           permission micro dans app.asar
+    adapter-voice-input.mjs    adapte voice-input.js a DSH (regenerable)
+    assembler-fr.mjs           regenere le module client du pack de langue
+  sauvegarde\<horodatage>\     copies d'origine + manifeste.txt
+  logs\                        journaux d'execution
+
+
+OU VONT LES FICHIERS
+--------------------
+Sur ce poste :
+
+  application   %LOCALAPPDATA%\Programs\DSH Desktop
+  profil        %APPDATA%\dsh-desktop\harness
+  profil actif  %APPDATA%\dsh-desktop\harness\profiles\web
+
+Le patch ecrit uniquement :
+
+  ...\profiles\web\node_modules\dsh-fr-locale\        (nouveau dossier)
+  ...\profiles\web\node_modules\dsh-voice-input\      (nouveau dossier)
+  ...\profiles\web\node_modules\dsh-theme-clear-blue\ (nouveau dossier)
+  ...\profiles\web\cordis.patch.yml                   (bloc ajoute, sauvegarde avant)
+  ...\DSH Desktop\resources\app.asar                  (permission micro)
+
+Il ne touche ni aux sessions, ni a .credentials.yaml.
+
+
+CE QUI A ETE VERIFIE, ET CE QUI NE L'A PAS ETE
+----------------------------------------------
+Verifie sur ce poste, avec sortie lue :
+  - le bouton micro est ancre juste apres le bouton d'envoi ;
+  - le clic droit ouvre le panneau avec cle API, modele, langue, envoi auto ;
+  - le champ de saisie de DSH est un contenteditable : l'insertion du texte
+    passe par la voie native du navigateur ;
+  - le micro s'ouvre reellement : Windows enregistre un acces de
+    DSH Desktop.exe de 19:10:32 a 19:10:38 le 20/10/2026 ;
+  - le pack de langue couvre 2 098 chaines reparties en 47 namespaces,
+    plus 454 libelles hors service de traduction (chinois et anglais) et
+    28 regles par motif. Depuis le 29/10, les libelles anglais du shell
+    (menu du compte, mode d'acces, section Compte, section Modeles,
+    prereglages d'agent) et les descriptions des extensions integrees sont
+    traduits : un balayage du DOM ne laisse plus d'anglais hors identifiants
+    techniques ;
+  - l'application demarre apres le patch d'archive, sans erreur d'integrite ;
+  - pachage et restauration du profil ont ete rejoues.
+
+Verifie depuis, dans l'application elle-meme (2026-10-29) :
+  - dictee de bout en bout avec la cle ElevenLabs du poste : enregistrement
+    (MediaRecorder), envoi a POST /v1/speech-to-text (scribe_v2), transcription
+    recue en moins de 2 s, texte insere dans le champ de saisie ;
+  - le bouton micro est monte par React dans l'emplacement
+    conversation.input.activity : il survit aux envois de message. C'etait le
+    defaut corrige : l'ancienne version l'inserait dans le DOM du composeur,
+    que React detruisait a chaque rendu, et le micro disparaissait ;
+  - taille du bouton alignee sur la fleche d'envoi (34 x 34 px).
+
+Non verifie, et signale comme tel :
+  - le fournisseur Gemini avec une cle personnelle : le poste utilise
+    ElevenLabs ; le chemin Gemini n'a pas ete rejoue depuis la correction ;
+  - une dictee pendant que l'agent travaille (file d'attente), non rejouee.
+
+
+EN CAS DE PROBLEME
+------------------
+1. Lisez  logs\dernier.log : chaque action y figure avec son resultat.
+2. Pour revenir a l'etat initial :  restaurer.bat
+3. Si le micro ne reagit pas : clic droit dessus et collez votre cle Gemini.
+4. Si l'application refuse de demarrer :  restaurer.bat  (elle remet app.asar).
+
+Ce patch ne supprime jamais definitivement : tout ce qu'il remplace est copie
+sous  sauvegarde\  avant modification.
